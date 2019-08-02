@@ -4,48 +4,251 @@
         flex-direction: row;
         white-space: nowrap;
         margin-right: 10px;
-        background: rgba(255,0,0,.1);
-        border: 1px solid green;
+        /* background: rgba(255,0,0,.1); */
+        /* border: 1px solid green; */
     }
 
     svg {
         display: block;
-        margin-right: 5px;
-        border: 1px solid blue;
+        /* border: 1px solid blue; */
+        width: 200;
+        height: 200;
+    }
+
+    .bottom {
+        transform: translate(100%, 100%) scale(-1, -1);
+    } 
+
+    .reverse {
+        transform: translate(100px, 0) scale(-1, 1);
+    }
+
+    path, circle {
+        stroke: black;
+        stroke-width: 3;
+        stroke-linecap: round;
+        fill: transparent;
+    }
+
+    .fillBlack {
+        fill: black;
     }
 
 </style>
 
 <div>
 <div>
-<svg height="50" width="50">
-    <path d="M 25 0 V 12.5 C 25 5, 0 5, 0 5" stroke="black" fill="transparent"/>
-    <path d="M 35 14 l 10 -8 " stroke="black" fill="transparent"/>
-    <path d="M 35 14 l 6 -11" stroke="black" fill="transparent"/>
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent"/>
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent" transform="translate(0,50) scale(1,-1)"/>
-    <circle cx="25" cy="25" r="12.5" stroke="black" fill="transparent"/>
-</svg> 
-<svg height="50" width="50">
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent"/>
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent" transform="translate(0,50) scale(1,-1)"/>
-    <circle cx="25" cy="25" r="12.5" stroke="black" fill="transparent"/>
-</svg> 
-<svg height="50" width="50">
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent"/>
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent" transform="translate(0,50) scale(1,-1)"/>
-    <circle cx="25" cy="25" r="12.5" stroke="black" fill="transparent"/>
-</svg> 
+<svg>
+    <g class=""><use xlink:href="#lid"/></g>
+    <g class="bottom"><use xlink:href="#lid"/></g>
+    <g class=""><use xlink:href="#w"/></g>
+    <g class="bottom"><use xlink:href="#h"/></g>
+</svg>
+<svg>
+    <g class=""><use xlink:href="#lid"/></g>
+    <g class=""><use xlink:href="#o"/></g>
+    <g class="bottom"><use xlink:href="#l"/></g>
+</svg>
+<svg>
+    <g class=""><use xlink:href="#lid"/></g>
+    <g class="bottom"><use xlink:href="#lid"/></g>
+    <g class=""><use xlink:href="#e"/></g>
+</svg>
+<svg>
+    <g class=""><use xlink:href="#lid"/></g>
+    <g class="bottom"><use xlink:href="#lid"/></g>
+    <g class=""><use xlink:href="#e"/></g>
+    <g class=""><use xlink:href="#n"/></g>
+    <g class="bottom"><use xlink:href="#w"/></g>
+</svg>
+<svg>
+    <g class=""><use xlink:href="#lid"/></g>
+    <g class="bottom"><use xlink:href="#lid"/></g>
+    <g class=""><use xlink:href="#o"/></g>
+    <g class=""><use xlink:href="#w"/></g>
+    <g class="bottom"><use xlink:href="#r"/></g>
+</svg>
+<svg>
+    <g class=""><use xlink:href="#lid"/></g>
+    <g class="bottom"><use xlink:href="#lid"/></g>
+    <g class=""><use xlink:href="#l"/></g>
+    <g class="bottom"><use xlink:href="#d"/></g>
+</svg>
 </div>
-<div>
-<svg height="50" width="50">
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent"/>
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent" transform="translate(0,50) scale(1,-1)"/>
-    <circle cx="25" cy="25" r="12.5" stroke="black" fill="transparent"/>
-</svg> 
-<svg height="50" width="50">
-    <path d="M 0 25 Q 25 0 50 25" stroke="black" fill="transparent"/>
-    <circle cx="25" cy="25" r="12.5" stroke="black" fill="transparent"/>
-</svg> 
 </div>
-</div>
+
+<svg>
+    <symbol id="lid" viewbox="-10 -10 120 120" >
+        <path d="M 0 50 Q 50 0 100 50" />
+    </symbol>
+
+    <symbol id="a" viewbox="-10 -10 120 120" >
+        <use xlink:href="#pupil"/>
+        <path d="M 50 25 L 50 75" />
+    </symbol>
+    <symbol id="e" viewbox="-10 -10 120 120" >
+        <use xlink:href="#pupil"/>
+    </symbol>
+    <symbol id="i" viewbox="-10 -10 120 120" >
+        <use xlink:href="#pupil"/>
+        <circle class="fillBlack" cx="50" cy="50" r="5" />
+    </symbol>
+    <symbol id="o" viewbox="-10 -10 120 120" >
+        <use xlink:href="#pupil"/>
+        <path d="M 25 50 L 75 50" />
+    </symbol>
+    <symbol id="u" viewbox="-10 -10 120 120" >
+        <use xlink:href="#pupil"/>
+        <path d="M 25 50 L 75 50" />
+        <path d="M 50 25 L 50 75" />
+    </symbol>
+    <symbol id="y" viewbox="-10 -10 120 120" >
+        <use xlink:href="#pupil"/>
+        <path d="M 50 75 C 50 35, 30 35, 30 35" />
+        <path d="M 50 75 C 50 35, 70 35, 70 35" />
+    </symbol>
+
+    <!-- Curl - N M W -->
+    <symbol id="n" viewbox="-10 -10 120 120" >
+        <use xlink:href="#curl" />
+    </symbol>
+    <symbol id="m" viewbox="-10 -10 120 120" >
+        <use xlink:href="#curl" />
+        <use xlink:href="#lashLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="w" viewbox="-10 -10 120 120" >
+        <use xlink:href="#curl" />
+        <use xlink:href="#doubleLashRight" />
+        <use xlink:href="#doubleLashLeft" />
+    </symbol>
+
+    <!-- Loop - S C Z -->
+    <symbol id="s" viewbox="-10 -10 120 120" >
+        <use xlink:href="#loop" />
+    </symbol>
+    <symbol id="c" viewbox="-10 -10 120 120" >
+        <use xlink:href="#loop" />
+        <use xlink:href="#lashLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="z" viewbox="-10 -10 120 120" >
+        <use xlink:href="#loop" />
+        <use xlink:href="#doubleLashRight" />
+        <use xlink:href="#doubleLashLeft" />
+    </symbol>
+
+    <!-- Tear - G K Q -->
+    <symbol id="g" viewbox="-10 -10 120 120" >
+        <use xlink:href="#tear" />
+    </symbol>
+    <symbol id="k" viewbox="-10 -10 120 120" >
+        <use xlink:href="#tear" />
+        <use xlink:href="#lashLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="q" viewbox="-10 -10 120 120" >
+        <use xlink:href="#tear" />
+        <use xlink:href="#doubleLashRight" />
+        <use xlink:href="#doubleLashLeft" />
+    </symbol>
+
+    <!-- Long Right - R L J -->
+    <symbol id="r" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longRight" />
+    </symbol>
+    <symbol id="l" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longRight" />
+        <use xlink:href="#lashLeft" />
+    </symbol>
+    <symbol id="j" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longRight" />
+        <use xlink:href="#doubleLashLeft" />
+    </symbol>
+
+    <!-- Long Left - H P B -->
+    <symbol id="h" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longLeft" />
+    </symbol>
+    <symbol id="p" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="b" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longLeft" />
+        <use xlink:href="#doubleLashRight" />
+    </symbol>
+
+    <!-- Lash - T D F V X -->
+    <symbol id="t" viewbox="-10 -10 120 120" >
+        <use xlink:href="#lash" />
+    </symbol>
+    <symbol id="d" viewbox="-10 -10 120 120" >
+        <use xlink:href="#lashLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="f" viewbox="-10 -10 120 120" >
+        <use xlink:href="#lash" />
+        <use xlink:href="#lashLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="v" viewbox="-10 -10 120 120" >
+        <use xlink:href="#doubleLash" />
+        <use xlink:href="#lashLeft" />
+        <use xlink:href="#lashRight" />
+    </symbol>
+    <symbol id="x" viewbox="-10 -10 120 120" >
+        <use xlink:href="#lash" />
+        <use xlink:href="#doubleLashRight" />
+        <use xlink:href="#doubleLashLeft" />
+    </symbol>
+
+    <defs>
+        <g id="pupil">
+            <circle cx="50" cy="50" r="25" />
+        </g>        
+
+        <g id="longLeft">
+            <path d="M 50 0 V 25 C 50 10, 0 10, 0 10" />
+        </g>
+        <g id="longRight">
+            <g class="reverse"><use xlink:href="#longLeft"/></g>
+        </g>
+    
+        <g id="doubleLashLeft">
+            <g class="reverse"><use xlink:href="#doubleLashRight"/></g>
+        </g>
+        <g id="doubleLashRight">
+            <path d="M 78 33 l 20 -16" />
+            <path d="M 78 33 l 12 -24" />
+        </g>
+    
+        <g id="lashLeft">
+            <g class="reverse"><use xlink:href="#lashRight"/></g>
+        </g>
+        <g id="lashRight">
+            <path d="M 78 33 l 20 -16" />
+        </g>
+    
+        <g id="lash" >
+            <path d="M 50 25 v -25" />
+        </g>
+        <g id="doubleLash">
+            <path d="M 50 25 l -6 -25" />
+            <path d="M 50 25 l 6 -25" />
+        </g>
+
+        <g id="tear" >
+            <circle cx="50" cy="12.5" r="12.5" />
+        </g>
+
+        <g id="curl" >
+            <path d="M 50 25 C 50 17, 58 17, 58 9 Q 58 1, 50 0 Q 42 1, 42 9" />
+        </g>
+
+        <g id="loop" >
+            <path d="M 42 1 L 50 9 C 58 17, 58 25, 50 25 C 42 25, 42 17, 50 9 L 58 1" />
+        </g>
+
+    </defs>
+</svg>
