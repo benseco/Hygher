@@ -1,9 +1,9 @@
 <style>
-    div {
+    #board {
         display: flex;
         flex-direction: row;
-        white-space: nowrap;
         margin-right: 10px;
+        flex-wrap: wrap;
         /* background: rgba(255,0,0,.1); */
         /* border: 1px solid green; */
     }
@@ -11,8 +11,8 @@
     svg {
         display: block;
         /* border: 1px solid blue; */
-        width: 200;
-        height: 200;
+        width: 50;
+        height: 50;
     }
 
     .bottom {
@@ -25,8 +25,8 @@
 
     path, circle {
         stroke: black;
-        stroke-width: 3;
-        stroke-linecap: round;
+        stroke-width: 5;
+        stroke-linecap: square;
         fill: transparent;
     }
 
@@ -35,46 +35,128 @@
     }
 
 </style>
+<script>
 
-<div>
-<div>
-<svg>
-    <g class=""><use xlink:href="#lid"/></g>
-    <g class="bottom"><use xlink:href="#lid"/></g>
-    <g class=""><use xlink:href="#w"/></g>
-    <g class="bottom"><use xlink:href="#h"/></g>
-</svg>
-<svg>
-    <g class=""><use xlink:href="#lid"/></g>
-    <g class=""><use xlink:href="#o"/></g>
-    <g class="bottom"><use xlink:href="#l"/></g>
-</svg>
-<svg>
-    <g class=""><use xlink:href="#lid"/></g>
-    <g class="bottom"><use xlink:href="#lid"/></g>
-    <g class=""><use xlink:href="#e"/></g>
-</svg>
-<svg>
-    <g class=""><use xlink:href="#lid"/></g>
-    <g class="bottom"><use xlink:href="#lid"/></g>
-    <g class=""><use xlink:href="#e"/></g>
-    <g class=""><use xlink:href="#n"/></g>
-    <g class="bottom"><use xlink:href="#w"/></g>
-</svg>
-<svg>
-    <g class=""><use xlink:href="#lid"/></g>
-    <g class="bottom"><use xlink:href="#lid"/></g>
-    <g class=""><use xlink:href="#o"/></g>
-    <g class=""><use xlink:href="#w"/></g>
-    <g class="bottom"><use xlink:href="#r"/></g>
-</svg>
-<svg>
-    <g class=""><use xlink:href="#lid"/></g>
-    <g class="bottom"><use xlink:href="#lid"/></g>
-    <g class=""><use xlink:href="#l"/></g>
-    <g class="bottom"><use xlink:href="#d"/></g>
-</svg>
-</div>
+var svgns = "http://www.w3.org/2000/svg";
+var xlinkns = "http://www.w3.org/1999/xlink";
+var vowels = { a: true, e: true, i: true, o: true, u: true, y: true }
+
+function symbol(name, bottom)
+{
+    var g = document.createElementNS(svgns, "g");
+    if (bottom) g.classList.add("bottom");
+    var use = document.createElementNS(svgns, "use");
+    use.setAttributeNS(xlinkns, "href", "#"+name);
+    g.appendChild(use);
+    return g;
+}
+
+function generate(part)
+{
+    var svg = document.createElementNS(svgns, "svg");
+    switch (part.length)
+    {
+        case 1:
+            var char = part[0];
+            svg.appendChild(symbol("lid", !vowels[char]));
+            svg.appendChild(symbol(char, !vowels[char]));
+            break;
+        case 2:
+            svg.appendChild(symbol("lid"));
+            svg.appendChild(symbol("lid", !vowels[part[1]]));
+            if (!vowels[part[0]]){
+                svg.appendChild(symbol(part[0]));
+                svg.appendChild(symbol(part[1], !vowels[part[1]]));
+            }
+            else if (vowels[part[1]]) {
+                svg.appendChild(symbol(part[1]));
+                svg.appendChild(symbol(part[0]+"2"));
+            }
+            else {
+                svg.appendChild(symbol(part[0]));
+                svg.appendChild(symbol(part[1], true));
+            } 
+            break;
+        case 3:
+            svg.appendChild(symbol("lid"));
+            svg.appendChild(symbol("lid", !vowels[part[2]]));
+            svg.appendChild(symbol(part[1]));
+            if (vowels[part[0]]) svg.appendChild(symbol(part[0]+"2"));
+            else svg.appendChild(symbol(part[0]));
+            if (vowels[part[2]]) svg.appendChild(symbol(part[2]+"3", true));
+            else svg.appendChild(symbol(part[2], true));
+            break;
+    }
+    return svg;
+}
+
+function draw(words)
+{
+    for (var i=0; i < words.length; i++) {
+        var word = words[i];
+        var div = document.createElement("div");
+        div.title = word.title;
+        for (var j=0; j < word.length; j++)
+        {
+            div.appendChild(generate(word[j]));
+        }
+        document.querySelector("#board").appendChild(div);
+    }
+}
+
+function partFull(part)
+{
+    if (part.length === 3) return true;
+    if (part.length === 2 && (vowels[part[0]] || !vowels[part[1]])) return true;
+    return false;
+}
+
+function parse(word)
+{
+    var parts = [];
+    var part = "";
+    for (var i = 0; i < word.length; i++) {
+        part += word[i];
+        if (partFull(part)) {
+            parts.push(part);
+            part = "";
+        }
+    }
+    if (part) parts.push(part);
+    return parts;
+}
+
+function parsePhrase(phrase)
+{
+    var array = phrase.split(" ");
+    var words = []
+    for (var i=0; i < array.length; i++)
+    {
+        var word = parse(array[i]);
+        word.title = array[i];
+        words.push(word);
+    }
+    return words;
+}
+
+function update()
+{
+    document.getElementById("board").innerHTML = "";
+    var source = document.getElementById("source").value;
+    draw(parsePhrase(source));
+
+}
+
+window.onload = update;
+
+
+</script>
+
+<body>
+<input id="source" type="text" oninput="update()" value="three blind mice see how they run they all ran after the farmers wife who cut off their tails with a carving knife did you ever see such a sight in your life as three blind mice">
+
+<div id="board">
+
 </div>
 
 <svg>
@@ -106,6 +188,54 @@
         <use xlink:href="#pupil"/>
         <path d="M 50 75 C 50 35, 30 35, 30 35" />
         <path d="M 50 75 C 50 35, 70 35, 70 35" />
+    </symbol>
+
+    <symbol id="a2" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longRight"/>
+        <use xlink:href="#dotLeft"/>
+    </symbol>
+    <symbol id="e2" viewbox="-10 -10 120 120" >
+        <use xlink:href="#lash"/>
+        <use xlink:href="#dotLeft"/>
+        <use xlink:href="#dotRight"/>
+    </symbol>
+    <symbol id="i2" viewbox="-10 -10 120 120" >
+        <use xlink:href="#tear"/>
+        <use xlink:href="#dotLeft"/>
+        <use xlink:href="#dotRight"/>
+    </symbol>
+    <symbol id="o2" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longLeft"/>
+        <use xlink:href="#dotRight"/>
+    </symbol>
+    <symbol id="u2" viewbox="-10 -10 120 120" >
+        <use xlink:href="#curl"/>
+        <use xlink:href="#dotLeft"/>
+        <use xlink:href="#dotRight"/>
+    </symbol>
+    <symbol id="y2" viewbox="-10 -10 120 120" >
+        <use xlink:href="#loop"/>
+        <use xlink:href="#dotLeft"/>
+        <use xlink:href="#dotRight"/>
+    </symbol>
+
+    <symbol id="a3" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longRight"/>
+    </symbol>
+    <symbol id="e3" viewbox="-10 -10 120 120" >
+        <use xlink:href="#lash"/>
+    </symbol>
+    <symbol id="i3" viewbox="-10 -10 120 120" >
+        <use xlink:href="#tear"/>
+    </symbol>
+    <symbol id="o3" viewbox="-10 -10 120 120" >
+        <use xlink:href="#longLeft"/>
+    </symbol>
+    <symbol id="u3" viewbox="-10 -10 120 120" >
+        <use xlink:href="#curl"/>
+    </symbol>
+    <symbol id="y3" viewbox="-10 -10 120 120" >
+        <use xlink:href="#loop"/>
     </symbol>
 
     <!-- Curl - N M W -->
@@ -250,5 +380,15 @@
             <path d="M 42 1 L 50 9 C 58 17, 58 25, 50 25 C 42 25, 42 17, 50 9 L 58 1" />
         </g>
 
+        <g id="dotLeft" >
+            <circle class="fillBlack" cx="25" cy="12.5" r="5" />
+        </g>
+        <g id="dotRight" >
+            <circle class="fillBlack" cx="75" cy="12.5" r="5" />
+        </g>
+
     </defs>
 </svg>
+
+    
+</body>
